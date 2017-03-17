@@ -1,4 +1,7 @@
-const db = require('./index.js');
+const Sequelize = require('sequelize');
+
+const db = require('./index');
+const Place = require('./place');
 
 const Activity = db.define('activity', {
   name: {
@@ -9,5 +12,6 @@ const Activity = db.define('activity', {
     type: Sequelize.STRING,
     }
 });
+
 
 module.exports = Activity;

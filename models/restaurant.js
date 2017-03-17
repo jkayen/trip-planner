@@ -1,4 +1,7 @@
-const db = require('./index.js');
+const Sequelize = require('sequelize');
+
+const db = require('./index');
+const Place = require('./place');
 
 const Restaurant = db.define('restaurant', {
     name: {
@@ -25,5 +28,6 @@ const Restaurant = db.define('restaurant', {
     }
   }
 });
+
 
 module.exports = Restaurant;

@@ -1,4 +1,7 @@
-const db = require('./index.js');
+const Sequelize = require('sequelize');
+
+const db = require('./index');
+const Place = require('./place');
 
 const Hotel = db.define('hotel', {
   name: {
@@ -22,10 +25,10 @@ const Hotel = db.define('hotel', {
       } else {
         this.setDataValue('amenities', arrayOfAmenities);
       }
-
     }
   }
 }
 );
+
 
 module.exports = Hotel;

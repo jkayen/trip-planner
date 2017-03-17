@@ -6,10 +6,11 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
 
-const models = require('./models');
+const db = require('./models');
 
 const routes = require('./routes');
 const app = express();
+
 
 app.set('view engine', 'html');
 app.engine('html', nunjucks.render);
@@ -34,4 +35,16 @@ app.use(function(err, req, res, next) {
   res.send('ERROR');
 });
 
-app.listen(3000, () => console.log('listening on port 3000'));
+
+db.sync()
+  .then(() => {
+    app.listen(3000, () => {
+      console.log('listening on port 3000');
+    })
+  })
+  .catch(err => console.error(err));
+
+
+
+
+

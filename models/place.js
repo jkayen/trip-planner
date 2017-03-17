@@ -1,4 +1,5 @@
 const db = require('./index.js');
+const Sequelize = require('sequelize');
 
 const Place = db.define('place', {
     address: {
@@ -26,4 +27,4 @@ const Place = db.define('place', {
   }
 );
 
-modules.exports = Place;
+module.exports = Place;
