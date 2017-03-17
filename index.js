@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
 
-var models = require('./models');
+const models = require('./models');
 
 const routes = require('./routes');
 const app = express();
