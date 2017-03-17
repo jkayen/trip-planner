@@ -1,27 +1,74 @@
-<!DOCTYPE html>
-<html>
-<head>
-   <title></title>
-</head>
-<body>
-   <label>Hotels:</label>
-   <select>
-      {% for hotel in hotels %}
-         <option>{{ hotel.name }}</option>
-      {% endfor %}
-   </select>
-   <label>Restaurants:</label>
-   <select>
-      {% for restaurant in restaurants %}
-      <option>{{ restaurant.name }}</option>
-      {% endfor %}
-   </select>
-   <label>Activities:</label>
-   <select>
-      {% for activity in activities %}
-      <option>{{ activity.name }}</option>
-      {% endfor %}
-   </select>
 
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block title %}Your Trip{% endblock %}
+
+{% block content %}
+
+<div class="col-lg-8">
+  <div class="map">MAP</div>
+</div>
+
+<div class="col-lg-4">
+
+  <div class="options-panel">
+    <div class="selects">
+      <label>Hotels:</label>
+      <select>
+        {% for hotel in hotels %}
+          <option>{{ hotel.name }}</option>
+        {% endfor %}
+      </select>
+      <label>Restaurants:</label>
+      <select>
+        {% for restaurant in restaurants %}
+        <option>{{ restaurant.name }}</option>
+        {% endfor %}
+      </select>
+      <label>Activities:</label>
+      <select>
+        {% for activity in activities %}
+        <option>{{ activity.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="itinerary">
+    <div class="day-buttons btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default">1</button>
+      <button type="button" class="btn btn-default">2</button>
+      <button type="button" class="btn btn-default">3</button>
+      <button type="button" class="btn btn-default">+</button>
+    </div>
+
+    <div class="itinerary-items">
+      <label>My Hotel:</label>
+          <ul>
+            <li>{{ hotel.name }}</li>
+            <button type="button" class="btn btn-default">x</button>
+          </ul>
+      <label>My Restaurants:</label>
+        {% for restaurant in myRestaurants %}
+          <ul>
+            <li>{{ restaurant.name }}</li>
+            <button type="button" class="btn btn-default">x</button>
+          </ul>
+        {% endfor %}
+      <label>My Activities:</label>
+        {% for activity in myActivities %}
+          <ul>
+            <li>{{ activity.name }}</li>
+            <button type="button" class="btn btn-default">x</button>
+          </ul>
+        {% endfor %}
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+{% endblock %}
