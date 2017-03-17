@@ -4,6 +4,24 @@
    <title></title>
 </head>
 <body>
-   Hello World
+   <label>Hotels:</label>
+   <select>
+      {% for hotel in hotels %}
+         <option>{{ hotel.name }}</option>
+      {% endfor %}
+   </select>
+   <label>Restaurants:</label>
+   <select>
+      {% for restaurant in restaurants %}
+      <option>{{ restaurant.name }}</option>
+      {% endfor %}
+   </select>
+   <label>Activities:</label>
+   <select>
+      {% for activity in activities %}
+      <option>{{ activity.name }}</option>
+      {% endfor %}
+   </select>
+
 </body>
 </html>

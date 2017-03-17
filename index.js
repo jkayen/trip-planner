@@ -20,8 +20,13 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false } ));
 app.use(bodyParser.json());
 
+
+
+app.use(express.static(path.join(__dirname, '/public')));
+app.use('/bootstrap',express.static(path.join(__dirname, '/node_modules/bootstrap/dist')));
+app.use('/jquery',express.static(path.join(__dirname, '/node_modules/jquery/dist')));
+
 app.use(routes);
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -34,7 +39,6 @@ app.use(function(err, req, res, next) {
   console.error(err);
   res.send('ERROR');
 });
-
 
 db.sync()
   .then(() => {

@@ -1,5 +1,13 @@
 const Sequelize = require('sequelize');
-const db = new Sequelize('postgres://localhost:5432/trip-planner');
+// For Jacob's Computer
+// const db = new Sequelize('postgres://localhost:5432/trip-planner');
+
+// For Samir's Computer
+const db = new Sequelize('trip-planner', 'wikistack', 'wikistack', {
+  host: 'localhost',
+  dialect: 'postgres',
+  logging: false
+});
 
  module.exports = db;
 

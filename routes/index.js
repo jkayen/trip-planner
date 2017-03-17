@@ -11,7 +11,11 @@ router.get('/', (req, res, next) => {
     Restaurants.findAll(),
     Activities.findAll()
   ])
-    .then(values => res.send(values));
+    .then(values => res.render('index', {
+      hotels: values[0],
+      restaurants: values[1],
+      activities: values[2]
+    }));
 });
 
 module.exports = router;
