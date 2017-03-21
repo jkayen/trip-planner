@@ -83,7 +83,7 @@
     </div>
   </div>
 </div>
-<script src="/jquery/jquery.min.js"></script>
+
 <script>
   var hotels = {{ hotels | dump | safe }};
   var restaurants = {{ restaurants | dump | safe }};
@@ -109,6 +109,18 @@
     const cat = $(this).siblings('select').data('type');
     const pick = $(this).siblings().children('option:selected').text();
     $('.' + cat).text(pick);
+    var loc;
+    var myLatLng = {lat: loc[0], lng: loc[1]};
+
+    for (var i = 0; i < hotels.length; i++) {
+      if (hotels[i].name === pick) {
+        loc = hotels[i].place.location;
+      }
+    }
+
+    drawMarker(cat, loc);
+
+
   })
 </script>
 
