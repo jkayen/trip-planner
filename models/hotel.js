@@ -1,34 +1,13 @@
-const Sequelize = require('sequelize');
+var Sequelize = require('sequelize');
+var db = require('./_db');
 
-const db = require('./index');
-const Place = require('./place');
-
-const Hotel = db.define('hotel', {
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
+var Hotel = db.define('hotel', {
+  name: Sequelize.STRING,
   num_stars: {
-    type: Sequelize.FLOAT,
-    validate: {
-      min: 1,
-      max: 5
-    }
+    type: Sequelize.INTEGER,
+    validate: { min: 1, max: 5 }
   },
-  amenities: {
-    type: Sequelize.ARRAY(Sequelize.TEXT),
-    set: function (value) {
-      let arrayOfAmenities;
-      if (typeof value === 'string'){
-        arrayOfAmenities = value.split(',').map(s => s.trim());
-        this.setDataValue('amenities', arrayOfAmenities)
-      } else {
-        this.setDataValue('amenities', arrayOfAmenities);
-      }
-    }
-  }
-}
-);
-
+  amenities: Sequelize.STRING
+});
 
 module.exports = Hotel;

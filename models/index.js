@@ -1,25 +1,12 @@
-const Sequelize = require('sequelize');
-// For Jacob's Computer
-const db = new Sequelize('postgres://localhost:5432/trip-planner');
+var db = require('./_db');
 
-// // For Samir's Computer
-// const db = new Sequelize('trip-planner', 'wikistack', 'wikistack', {
-//   host: 'localhost',
-//   dialect: 'postgres',
-//   logging: false
-// });
-
- module.exports = db;
-
-const Place = require('./place');
-const Hotel = require('./hotel');
-const Restaurant = require('./restaurant');
-const Activity = require('./activity');
+var Place = require('./place');
+var Hotel = require('./hotel');
+var Restaurant = require('./restaurant');
+var Activity = require('./activity');
 
 Hotel.belongsTo(Place);
 Restaurant.belongsTo(Place);
 Activity.belongsTo(Place);
 
-
-
-
+module.exports = db;

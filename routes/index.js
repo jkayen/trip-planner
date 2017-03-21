@@ -1,21 +1,39 @@
-'use strict'
+var express = require('express');
+var router = express.Router();
+var Hotel = require('../models/hotel');
+var Restaurant = require('../models/restaurant');
+var Activity = require('../models/activity');
+var Place = require('../models/place');
+var Promise = require('bluebird');
 
-const router = require('express').Router();
-const Hotels = require('../models/hotel');
-const Restaurants = require('../models/restaurant');
-const Activities = require('../models/activity');
+router.get('/', function(req, res, next) {
 
-router.get('/', (req, res, next) => {
+  var findingHotels = Hotel.findAll({
+    include: [Place]
+  });
+
+  var findingActivities = Activity.findAll({
+    include: [Place]
+  });
+
+  var findingRestaurants = Restaurant.findAll({
+    include: [Place]
+  });
+
   Promise.all([
-    Hotels.findAll(),
-    Restaurants.findAll(),
-    Activities.findAll()
+    findingHotels,
+    findingActivities,
+    findingRestaurants
   ])
-    .then(values => res.render('index', {
-      hotels: values[0],
-      restaurants: values[1],
-      activities: values[2]
-    }));
+  .spread(function(hotels, activities, restaurants) {
+    res.render('index', {
+      hotels: hotels,
+      activities: activities,
+      restaurants: restaurants
+    });
+  })
+  .catch(next);
+
 });
 
 module.exports = router;

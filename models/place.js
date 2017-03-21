@@ -1,30 +1,12 @@
-const db = require('./index.js');
-const Sequelize = require('sequelize');
+var Sequelize = require('sequelize');
+var db = require('./_db');
 
-const Place = db.define('place', {
-    address: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    city: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    state: {
-      type: Sequelize.STRING(2),
-      allowNull: false,
-      set: function (string) {
-        this.setDataValue('state', string.toUpperCase())
-      }
-    },
-    phone: {
-      //#TODO: See if we can normalize phone numbers in the setter.
-      type: Sequelize.STRING,
-    },
-    location: {
-      type: Sequelize.ARRAY(Sequelize.FLOAT),
-    }
-  }
-);
+var Place = db.define('place', {
+  address: Sequelize.STRING,
+  city: Sequelize.STRING,
+  state: Sequelize.STRING,
+  phone: Sequelize.STRING,
+  location: Sequelize.ARRAY(Sequelize.DOUBLE)
+});
 
 module.exports = Place;

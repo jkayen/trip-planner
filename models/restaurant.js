@@ -1,33 +1,13 @@
-const Sequelize = require('sequelize');
+var Sequelize = require('sequelize');
+var db = require('./_db');
 
-const db = require('./index');
-const Place = require('./place');
-
-const Restaurant = db.define('restaurant', {
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-  cuisine: {
-      type: Sequelize.ARRAY(Sequelize.TEXT),
-      set: function (value) {
-        let arrayOfCuisines;
-        if (typeof value === 'string'){
-          arrayOfCuisines = value.split(',').map(s => s.trim());
-          this.setDataValue('cuisine', arrayOfCuisines)
-        } else {
-          this.setDataValue('cuisine', arrayOfCuisines);
-        }
-      }
-    },
+var Restaurant = db.define('restaurant', {
+  name: Sequelize.STRING,
   price: {
-      type: Sequelize.INTEGER,
-      validate: {
-        min: 1,
-        max: 5
-    }
-  }
+    type: Sequelize.INTEGER,
+    validate: { min: 1, max: 5 }
+  },
+  cuisine: Sequelize.STRING
 });
-
 
 module.exports = Restaurant;
