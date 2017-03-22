@@ -44,10 +44,10 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="day-buttons">
-            <button class="btn btn-circle day-btn">1</button>
-            <button class="btn btn-circle day-btn">2</button>
-            <button class="btn btn-circle day-btn">3</button>
+            <!--<button class="btn btn-circle day-btn">2</button>
+            <button class="btn btn-circle day-btn">3</button>-->
             <button class="btn btn-circle day-btn" id="day-add">+</button>
+            <button class="btn btn-circle day-btn">1</button>
           </div>
         </div>
         <div class="panel-body" id="itinerary">
@@ -106,15 +106,22 @@
 
 <script>
   let cat, hotelMarker, restaurantMarker, activityMarker;
+  let day = 2;
+  const itin = {'hotel': null, 'restaurant': null, 'activity': null}
+  let dayPlanner = [itin];
+  let daySelected = 0;
+
 
   $('#options-panel').on('click', 'button', function (event) {
     cat = $(this).siblings('select').data('type'); // grabs value of data-type attribute: <select data-type="hotel" id="hotel-choices"> e.g., 'hotel'
     const pick = $(this).siblings().children('option:selected').text(); // finds the text of the option element with a 'selected' property, e.g.,'W Hotel'
-    $('.' + cat).text(pick); // change the text of the element with a class matching cat within itinerary panel, e.g. .hotel
+    $('.' + cat).text(pick); // change the text of the element with a class matching cat within itinerary panel, e.g. .hotel=
+
+    dayPlanner[daySelected][cat] = pick;
+    console.log(pick, ' added to day ', daySelected + 1)
 
     let loc;
     let type;
-
 
     if (cat === 'hotel') type = hotels;
     else if (cat === 'restaurant') type = restaurants;
@@ -144,18 +151,16 @@
       }
       activityMarker= drawMarker(cat, loc);
     }
-
   })
 
   $('#itinerary').on('click', 'button', function(event) {
     cat = $(this).siblings('span').attr('class').slice(6);
     ($(this).siblings('span').text(''));
 
-      if (cat === 'hotel') {
+    if (cat === 'hotel') {
       if (hotelMarker) {  // if a marker is already set, clear it
         hotelMarker.setMap(null);
       }
-
     }
     else if (cat === 'restaurant') {
       if (restaurantMarker) {
@@ -167,8 +172,25 @@
         activityMarker.setMap(null);
       }
     }
+  })
 
+  const dayAdd = $('#day-add').on('click', function(event) {
+    $('.day-buttons').append('<button class="btn btn-circle day-btn">' + day++ + '</button>');
+    dayPlanner.push(itin);
+  })
 
+  // reference dayPlanner array at the given index to display those items.
+  $('.day-buttons').on('click', 'button', function(event) {
+    if ($(this).index() > 0) {
+    daySelected = $(this).index() - 1
+    const dayItinerary = dayPlanner[daySelected]
+    for (var key in dayItinerary) {
+      $('.' + key).text(dayItinerary[key]);
+    }
+    console.log('itin: ', dayItinerary);
+    console.log('daySelected: ', daySelected);
+    console.log('dayPlanner: ', dayPlanner);
+    }
   })
 
 </script>
