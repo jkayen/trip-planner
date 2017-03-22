@@ -14,6 +14,7 @@ function drawMarker (type, coords) {
       position: latLng
     });
     marker.setMap(currentMap);
+    return marker;
 }
 
 $(function initializeMap (){

@@ -105,23 +105,72 @@
 </script>
 
 <script>
-  $('#options-panel').on('click', 'button', function (event) {
-    const cat = $(this).siblings('select').data('type');
-    const pick = $(this).siblings().children('option:selected').text();
-    $('.' + cat).text(pick);
-    var loc;
-    var myLatLng = {lat: loc[0], lng: loc[1]};
+  let cat, hotelMarker, restaurantMarker, activityMarker;
 
-    for (var i = 0; i < hotels.length; i++) {
-      if (hotels[i].name === pick) {
-        loc = hotels[i].place.location;
+  $('#options-panel').on('click', 'button', function (event) {
+    cat = $(this).siblings('select').data('type'); // grabs value of data-type attribute: <select data-type="hotel" id="hotel-choices"> e.g., 'hotel'
+    const pick = $(this).siblings().children('option:selected').text(); // finds the text of the option element with a 'selected' property, e.g.,'W Hotel'
+    $('.' + cat).text(pick); // change the text of the element with a class matching cat within itinerary panel, e.g. .hotel
+
+    let loc;
+    let type;
+
+
+    if (cat === 'hotel') type = hotels;
+    else if (cat === 'restaurant') type = restaurants;
+    else if (cat === 'activity') type = activities;
+
+    for (var i = 0; i < type.length; i++) {
+      if (type[i].name === pick) {
+        loc = type[i].place.location; // grab location property off our data pulled in from nunjucks, e.g., hotels variable
       }
     }
 
-    drawMarker(cat, loc);
+    if (cat === 'hotel') {
+      if (hotelMarker) {  // if a marker is already set, clear it
+        hotelMarker.setMap(null);
+      }
+      hotelMarker = drawMarker(cat, loc); // then draw a new marker. cat = icon type, loc is an array of long/lat
+    }
+    else if (cat === 'restaurant') {
+      if (restaurantMarker) {
+        restaurantMarker.setMap(null);
+      }
+      restaurantMarker = drawMarker(cat, loc);
+    }
+    else if (cat === 'activity') {
+      if (activityMarker) {
+        activityMarker.setMap(null);
+      }
+      activityMarker= drawMarker(cat, loc);
+    }
+
+  })
+
+  $('#itinerary').on('click', 'button', function(event) {
+    cat = $(this).siblings('span').attr('class').slice(6);
+    ($(this).siblings('span').text(''));
+
+      if (cat === 'hotel') {
+      if (hotelMarker) {  // if a marker is already set, clear it
+        hotelMarker.setMap(null);
+      }
+
+    }
+    else if (cat === 'restaurant') {
+      if (restaurantMarker) {
+        restaurantMarker.setMap(null);
+      }
+    }
+    else if (cat === 'activity') {
+      if (activityMarker) {
+        activityMarker.setMap(null);
+      }
+    }
 
 
   })
+
 </script>
 
 
